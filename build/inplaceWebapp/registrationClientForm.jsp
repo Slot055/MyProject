@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="windows-1251"%>
 <%@ page import="javax.servlet.http.HttpSession,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse"%>
-<%@ page import="javax.servlet.http.HttpServlet,ru.myOnlineShop.model.customer.ClientAccount,javax.servlet.annotation.WebServlet"%>
-<%@ page import="ru.myOnlineShop.model.customer.clientServise.clientAccountService.AccountService,ru.myOnlineShop.model.customer.Client"%>
-<%@ page import="ru.myOnlineShop.model.dataBaseProject.AccountDataBaseProject,java.util.concurrent.atomic.AtomicReference,ru.myOnlineShop.model.BuilderObject"%>
+<%@ page import="ru.myOnlineShop.model.customer.ClientAccount"%>
+<%@ page import="ru.myOnlineShop.model.customer.Client"%>
 <html>
 <head>
     <meta charset="UTF-8">

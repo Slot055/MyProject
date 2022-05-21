@@ -2,9 +2,9 @@ package ru.myOnlineShop.model.constanta;
 
 public enum StatusAccount {
 
-    ADMIN("Администратор"),
-    USER("Пользователь"),
-    UNKNOWN("Неизвестный");
+    ADMIN("ADMIN"),
+    USER("USER"),
+    UNKNOWN("UNKNOWN");
 
     private final String name;
 

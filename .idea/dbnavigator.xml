@@ -24,14 +24,12 @@
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
+    <show-object-properties value="false" />
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f617463c-56db-4ef2-b652-871f41f3da0e">
-      <console name="BdProject" type="STANDARD" schema="accountdatabase" session="Main"><![CDATA[use accountdatabase;
-INSERT INTO account(login,`password`,`idAccount`,`statusAccount`,`Client`)
-VALUES ('Clon', 'Clon1357', 285, 'USER');]]></console>
+      <console name="BdProject" type="STANDARD" schema="accountdatabase" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

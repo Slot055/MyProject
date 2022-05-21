@@ -19,7 +19,7 @@ public class LogOutServlet extends HttpServlet {
         session.removeAttribute("clientAccount");
 
         //response.sendRedirect(super.getServletContext().getContextPath());
-        response.sendRedirect("/index.html");
+        response.sendRedirect("/index.jsp");
     }
 
 

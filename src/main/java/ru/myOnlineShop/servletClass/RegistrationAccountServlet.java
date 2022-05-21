@@ -1,8 +1,9 @@
 package ru.myOnlineShop.servletClass;
 
+import ru.myOnlineShop.model.constanta.StatusAccount;
 import ru.myOnlineShop.model.customer.ClientAccount;
 import ru.myOnlineShop.model.customer.clientServise.clientAccountService.AccountService;
-import ru.myOnlineShop.model.dataBaseProject.AccountDataBaseProject;
+import ru.myOnlineShop.model.dao.AccountDAO;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -37,27 +38,44 @@ public class RegistrationAccountServlet extends HttpServlet {
 
         if ("registration".equals(command)) {
 
-            request.getRequestDispatcher("/registrationAccountForm.html").forward(request, response);
+            request.getRequestDispatcher("/registrationAccountForm.jsp").forward(request, response);
 
         }
 
 
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        @SuppressWarnings("unchecked")
-        AtomicReference<AccountDataBaseProject> accountDataBase = (AtomicReference<AccountDataBaseProject>) getServletContext().getAttribute("accountDataBase");
-        response.setContentType("text/html");
-        response.setCharacterEncoding("windows-1251");
-        AccountService accountService = new AccountService();
-        ClientAccount clientAccount = accountService.registrationAccount(request, response);
-        accountDataBase.get().add(clientAccount);
-        response.getWriter().print(clientAccount);
-        response.getWriter().print(accountDataBase.get().getClientAccountBase());
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        response.getWriter().print("<html><head><p>Регистрация прошла успешно</a></p></body ></html > ");
-        response.getWriter().print("<html><head><p><a href=./inputAccount.jsp>Войти в аккаунт</a></p></body></html>");
-        response.getWriter().print("<html><head><p><a href=\"./\">Вернуться на главную страницу</a></p></body></html>");
+        try {
+            response.setContentType("text/html");
+            response.setCharacterEncoding("windows-1251");
+            @SuppressWarnings("unchecked")
+            AtomicReference<AccountDAO> accountDataBase = (AtomicReference<AccountDAO>) getServletContext().getAttribute("accountDataBase");
+            AccountService accountService = new AccountService();
+            ClientAccount clientAccount = accountService.registrationAccount(request, response);
+            if (clientAccount != null) {
+                accountDataBase.get().insert(clientAccount);
+                response.getWriter().print(clientAccount);
+                response.getWriter().print("<html><head><p>Регистрация прошла успешно</a></p></body ></html > ");
+                if (request.getSession().getAttribute("clientAccount") != null) {
+                    response.getWriter().print("<html><head><p><a href=\"/accountDataBaseAll\">К списку аккаунтов пользователей</a></p></body></html>");
+                } else {
+                    response.getWriter().print("<html><head><p><a href=./inputAccount.jsp>Войти в аккаунт</a></p></body></html>");
+                }
+                response.getWriter().print("<html><head><p><a href=\"./\">Вернуться на главную страницу</a></p></body></html>");
+            } else {
+
+                response.getWriter().print("<html><head><p>Регистрация не завершена, повторите процесс регистрации</a></p></body ></html > ");
+                response.getWriter().print("<html><head><p><a href=\"./registrationAccountForm.jsp\">На страницу регистрации</a></p></body></html>");
+                response.getWriter().print("<html><head><p><a href=\"./\">Вернуться на главную страницу</a></p></body></html>");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+            //getServletContext().getRequestDispatcher("/registrationAccountForm.jsp").forward(request, response);
+        }
+
+
     }
 
 

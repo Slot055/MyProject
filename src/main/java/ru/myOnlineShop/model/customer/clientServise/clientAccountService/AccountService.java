@@ -21,12 +21,11 @@ public class AccountService implements ClientServise {
     public ClientAccount registrationAccount(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         ClientAccount clientAccount = BuilderObject.buildClientAccount(request, response);
-        clientAccount.setIdAccount(generateId(clientAccount));
-        clientAccount.setStatusAccount(StatusAccount.USER);
+
         return clientAccount;
     }
 
-    public ClientAccount registrationClient(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ClientAccount registrationClient(HttpServletRequest request, HttpServletResponse response) {
         ClientAccount clientAccount = (ClientAccount) request.getSession().getAttribute("clientAccount");
         Client client = BuilderObject.buildClient(request, response);
         clientAccount.setClient(client);

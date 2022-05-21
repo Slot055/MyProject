@@ -1,16 +1,16 @@
 package ru.myOnlineShop.model.customer;
+import java.io.Serializable;
 
-import java.util.Objects;
 
-public class Client {
+public class Client implements Serializable {
     private String name;
     private String lastName;
     private String gender;
-    private int age;
+    private String age;
     private String phoneNumber;
     private String email;
 
-    public Client(String name, String lastName, String gender, int age, String phoneNumber, String email) {
+    public Client(String name, String lastName, String gender, String age, String phoneNumber, String email) {
         this.name = name;
         this.lastName = lastName;
         this.gender = gender;
@@ -56,11 +56,11 @@ public class Client {
         this.gender = gender;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
