@@ -1,8 +1,5 @@
 package ru.myOnlineShop.servletClass.adminServletClass;
-
-import ru.myOnlineShop.model.customer.ClientAccount;
-import ru.myOnlineShop.model.dao.AccountDAO;
-
+import ru.myOnlineShop.dao.AccountDAO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Page not found</title>
+<title>Ошибка</title>
 </head>
 <body>
 <h2>Page not found</h2>

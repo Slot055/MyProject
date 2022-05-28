@@ -1,9 +1,8 @@
 package ru.myOnlineShop.servletClass;
 
-import ru.myOnlineShop.model.constanta.StatusAccount;
+import ru.myOnlineShop.model.BuilderObject;
 import ru.myOnlineShop.model.customer.ClientAccount;
-import ru.myOnlineShop.model.customer.clientServise.clientAccountService.AccountService;
-import ru.myOnlineShop.model.dao.AccountDAO;
+import ru.myOnlineShop.dao.AccountDAO;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -52,8 +51,7 @@ public class RegistrationAccountServlet extends HttpServlet {
             response.setCharacterEncoding("windows-1251");
             @SuppressWarnings("unchecked")
             AtomicReference<AccountDAO> accountDataBase = (AtomicReference<AccountDAO>) getServletContext().getAttribute("accountDataBase");
-            AccountService accountService = new AccountService();
-            ClientAccount clientAccount = accountService.registrationAccount(request, response);
+            ClientAccount clientAccount = BuilderObject.buildClientAccount(request, response);
             if (clientAccount != null) {
                 accountDataBase.get().insert(clientAccount);
                 response.getWriter().print(clientAccount);
@@ -68,11 +66,12 @@ public class RegistrationAccountServlet extends HttpServlet {
 
                 response.getWriter().print("<html><head><p>Регистрация не завершена, повторите процесс регистрации</a></p></body ></html > ");
                 response.getWriter().print("<html><head><p><a href=\"./registrationAccountForm.jsp\">На страницу регистрации</a></p></body></html>");
+                response.getWriter().print("<html><head><p><a href=./regAccount/inputAccount>Войти в аккаунт</a></p></body></html>");
                 response.getWriter().print("<html><head><p><a href=\"./\">Вернуться на главную страницу</a></p></body></html>");
             }
         } catch (Exception ex) {
             System.out.println(ex);
-            //getServletContext().getRequestDispatcher("/registrationAccountForm.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/registrationAccountForm.jsp").forward(request, response);
         }
 
 

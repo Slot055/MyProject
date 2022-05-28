@@ -1,43 +1,43 @@
 package ru.myOnlineShop.model.product;
 
-public class Product implements Comparable<Product>{
-    private String categoryProduct;
+public class Product implements Comparable<Product> {
+    private int item;
     private String typeProduct;
+    private String categoryProduct;
+    private String groupProduct;
     private String nameProduct;
     private double price;
     private String description;
-    private int item;
     private int quantity;
 
-    public Product(String categoryProduct, String typeProduct, String nameProduct, double price,String description, int item,int quantity) {
-        this.categoryProduct = categoryProduct;
+    public Product(int item, String typeProduct, String categoryProduct, String groupProduct, String nameProduct, double price, String description, int quantity) {
+        this.item = item;
         this.typeProduct = typeProduct;
+        this.categoryProduct = categoryProduct;
+        this.groupProduct = groupProduct;
         this.nameProduct = nameProduct;
         this.price = price;
         this.description = description;
-        this.item = item;
+        this.quantity = quantity;
+    }
+
+    public Product(String typeProduct, String categoryProduct, String groupProduct, String nameProduct, double price, String description, int quantity) {
+        this.typeProduct = typeProduct;
+        this.categoryProduct = categoryProduct;
+        this.groupProduct = groupProduct;
+        this.nameProduct = nameProduct;
+        this.price = price;
+        this.description = description;
         this.quantity = quantity;
     }
 
     public Product() {
     }
 
-    public int generateItem(Product product) {
-        int id = product.hashCode() / 100000;
-        if (id < 0) {
-            int idFinal = Math.abs(-id);
-            setItem(idFinal);
-            return getItem();
-        } else setItem(id);
-
-        return getItem();
-
-    }
-
     @Override
     public String toString() {
-        return "ÐšÐ°Ñ‚ÐµÐ³Ð¾Ñ€Ð¸Ñ Ñ‚Ð¾Ð²Ð°Ñ€Ð°:" + categoryProduct + " , " + "Ð¢Ð¸Ð¿ Ñ‚Ð¾Ð²Ð°Ñ€Ð°:" + typeProduct + " , " + "ÐÐ°Ð¸Ð¼ÐµÐ½Ð¾Ð²Ð°Ð½Ð¸Ðµ Ñ‚Ð¾Ð²Ð°Ñ€Ð°:" + nameProduct +
-                " , " + "Ð¦ÐµÐ½Ð°:" + price + " , " + "ÐÑ€Ñ‚Ð¸ÐºÑƒÐ»:" + item + " , " + "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾:" + quantity;
+        return "Òèï òîâàðà:" + typeProduct + " , " + "Êàòåãîðèÿ òîâàðà:" + categoryProduct + " , " + "Íàèìåíîâàíèå òîâàðà:" + nameProduct +
+                " , " + "Öåíà:" + price + " , " + "Îïèñàíèå:" + description + " , " + "Êîëè÷åñòâî:" + quantity;
     }
 
 
@@ -61,6 +61,14 @@ public class Product implements Comparable<Product>{
         this.categoryProduct = categoryProduct;
     }
 
+    public String getGroupProduct() {
+        return groupProduct;
+    }
+
+    public void setGroupProduct(String groupProduct) {
+        this.groupProduct = groupProduct;
+    }
+
     public String getNameProduct() {
         return nameProduct;
     }
@@ -71,6 +79,14 @@ public class Product implements Comparable<Product>{
 
     public double getPrice() {
         return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setPrice(double price) {

@@ -1,8 +1,13 @@
 package ru.myOnlineShop.model;
+
+import ru.myOnlineShop.dao.ProductDAO;
 import ru.myOnlineShop.model.constanta.StatusAccount;
 import ru.myOnlineShop.model.customer.Client;
 import ru.myOnlineShop.model.customer.ClientAccount;
-import ru.myOnlineShop.model.dao.AccountDAO;
+import ru.myOnlineShop.dao.AccountDAO;
+import ru.myOnlineShop.model.product.Product;
+import ru.myOnlineShop.service.clientServise.clientAccountService.AccountService;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,46 +23,61 @@ public class BuilderObject {
     }
 
     public static Client buildClient(HttpServletRequest request, HttpServletResponse response) {
-        String cName = request.getParameter("name");
-        String cLastName = request.getParameter("lastName");
-        String cGender = request.getParameter("gender");
-        String cAge = request.getParameter("age");
-        String cPhoneNumber = request.getParameter("phoneNumber");
-        String cEmail = request.getParameter("email");
-        Client client = new Client(cName, cLastName, cGender, cAge, cPhoneNumber, cEmail);
+        String name = request.getParameter("name");
+        String lastName = request.getParameter("lastName");
+        String gender = request.getParameter("gender");
+        String age = request.getParameter("age");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String email = request.getParameter("email");
+        Client client = new Client(name, lastName, gender, age, phoneNumber, email);
 
 
         return client;
     }
 
     public static ClientAccount buildClientAccount(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ClientAccount clientAccount;
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        ClientAccount clientAccount;
         @SuppressWarnings("unchecked")
-        AtomicReference<AccountDAO> accountDataBase = (AtomicReference<AccountDAO>) request.getServletContext().getAttribute("accountDataBase");
-        ArrayList<ClientAccount> clientAccountBase = accountDataBase.get().select();
-        for (ClientAccount s : clientAccountBase) {
-            if (s.getLogin().equals(login)) {
-                response.getWriter().print("<html><head><p>Логин " + "*" + s.getLogin() + "* уже зарегистрирован в системе, выберите другой логин</a></p></body ></html > ");
+        AtomicReference<AccountService> accountService = (AtomicReference<AccountService>) request.getServletContext().getAttribute("accountService");
+        if (accountService.get().repeatCheckAccount(request, response, login)) return null;
+        else {
+            try {
+                if (request.getParameter("statusAccount") != null) {
+                    StatusAccount statusAccount = StatusAccount.valueOf(request.getParameter("statusAccount").toUpperCase());
+                    clientAccount = new ClientAccount(login, password, statusAccount, buildClient(request, response));
 
-                return null;
-            }
+                } else {
+                    clientAccount = new ClientAccount(login, password, StatusAccount.USER, buildClient(request, response));
 
-        }
-        try {
-            if (request.getParameter("statusAccount") != null) {
-                StatusAccount statusAccount = StatusAccount.valueOf(request.getParameter("statusAccount").toUpperCase());
-                clientAccount = new ClientAccount(login, password, statusAccount, buildClient(request, response));
-
-            } else {
+                }
+            } catch (IllegalArgumentException e) {
                 clientAccount = new ClientAccount(login, password, StatusAccount.USER, buildClient(request, response));
-
             }
-        } catch (IllegalArgumentException e) {
-            clientAccount = new ClientAccount(login, password, StatusAccount.USER, buildClient(request, response));
+            return clientAccount;
         }
-        return clientAccount;
+    }
+
+    public static Product buildProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Product product;
+        @SuppressWarnings("unchecked")
+        AtomicReference<AccountService> accountService = (AtomicReference<AccountService>) request.getServletContext().getAttribute("accountService");
+        int item = Integer.parseInt(request.getParameter("item"));
+        String typeProduct = request.getParameter("typeProduct");
+        String categoryProduct = request.getParameter("categoryProduct");
+        String groupProduct = request.getParameter("groupProduct");
+        String nameProduct = request.getParameter("nameProduct");
+        double price = Double.parseDouble(request.getParameter("price"));
+        String description = request.getParameter("description");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+        if (accountService.get().repeatCheckProduct(request, response, typeProduct, categoryProduct, groupProduct, nameProduct, (int) price))
+            return null;
+        else {
+            product = new Product(item, typeProduct, categoryProduct, groupProduct, nameProduct, price, description, quantity);
+            return product;
+        }
     }
 
 }

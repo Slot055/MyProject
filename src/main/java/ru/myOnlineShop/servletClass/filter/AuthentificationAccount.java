@@ -1,6 +1,7 @@
 package ru.myOnlineShop.servletClass.filter;
 import ru.myOnlineShop.model.constanta.StatusAccount;
-import ru.myOnlineShop.model.dao.AccountDAO;
+import ru.myOnlineShop.service.clientServise.clientAccountService.AccountService;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -25,16 +26,17 @@ public class AuthentificationAccount implements Filter {
 
         final String login = req.getParameter("login");
         final String password = req.getParameter("password");
-        @SuppressWarnings("unchecked") final AtomicReference<AccountDAO> accountDataBase = (AtomicReference<AccountDAO>) req.getServletContext().getAttribute("accountDataBase");
+        @SuppressWarnings("unchecked")
+        final AtomicReference<AccountService> accountService = (AtomicReference<AccountService>) req.getServletContext().getAttribute("accountService");
         final HttpSession session = req.getSession();
         session.getAttribute("clientAccount");
         if (nonNull(session.getAttribute("login")) && nonNull(session.getAttribute("password"))) {
             final StatusAccount statusAccount = (StatusAccount) session.getAttribute("statusAccount");
             moveToMenu(req, res, statusAccount);
 
-        } else if (accountDataBase.get().clientAccountIsExist(login, password)) {
+        } else if (accountService.get().clientAccountIsExist(login, password, req)) {
 
-            final StatusAccount statusAccount = accountDataBase.get().getRoleByLoginPassword(login, password, req);
+            final StatusAccount statusAccount = accountService.get().getRoleByLoginPassword(login, password, req);
             req.getSession().setAttribute("login", login);
             req.getSession().setAttribute("password", password);
             req.getSession().setAttribute("statusAccount", statusAccount);

@@ -1,9 +1,6 @@
 package ru.myOnlineShop.servletClass.adminServletClass;
-
 import ru.myOnlineShop.model.customer.ClientAccount;
-import ru.myOnlineShop.model.dao.AccountDAO;
-
-
+import ru.myOnlineShop.dao.AccountDAO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +20,7 @@ public class ListAccountDataBaseServlet extends HttpServlet {
         ArrayList<ClientAccount> clientAccountBase = accountDataBase.get().select();
         request.setAttribute("clientAccountBase", clientAccountBase);
 
-        getServletContext().getRequestDispatcher("/accountDataBaseAll.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/sellerJSP/account/accountDataBaseAll.jsp").forward(request, response);
     }
 }
 

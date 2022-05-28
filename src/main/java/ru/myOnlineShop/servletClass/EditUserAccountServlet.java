@@ -1,17 +1,16 @@
 package ru.myOnlineShop.servletClass;
 
+import ru.myOnlineShop.model.BuilderObject;
 import ru.myOnlineShop.model.constanta.StatusAccount;
 import ru.myOnlineShop.model.customer.Client;
 import ru.myOnlineShop.model.customer.ClientAccount;
-import ru.myOnlineShop.model.customer.clientServise.clientAccountService.AccountService;
-import ru.myOnlineShop.model.dao.AccountDAO;
+import ru.myOnlineShop.dao.AccountDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -27,18 +26,18 @@ public class EditUserAccountServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             response.setContentType("text/html");
-            response.setCharacterEncoding("windows-1251");
+            response.setCharacterEncoding("UTF-8");
             @SuppressWarnings("unchecked")
             AtomicReference<AccountDAO> accountDataBase = (AtomicReference<AccountDAO>) getServletContext().getAttribute("accountDataBase");
             int idAccount = Integer.parseInt(request.getParameter("idAccount"));
             String login = request.getParameter("login");
             String password = request.getParameter("password");
             StatusAccount statusAccount = StatusAccount.USER;
-            Client client = new Client(request.getParameter("name"), request.getParameter("lastName"), request.getParameter("gender"),
-                    request.getParameter("age"), request.getParameter("phoneNumber"), request.getParameter("email"));
+            Client client = BuilderObject.buildClient(request,response);
 
             ClientAccount clientAccount = new ClientAccount(idAccount, login, password, statusAccount, client);
             accountDataBase.get().update(clientAccount);
+            request.getSession().setAttribute("clientAccount",clientAccount);
             response.getWriter().print("<html><head><p>Личные данные сохранены</a></p></body ></html >");
             response.getWriter().print("<html><head><p><a href=\"./regAccount/inputAccount\">В личный кабинет</a></p></body></html>");
             response.getWriter().print("<html><head><p><a href=\"./\">Вернуться на главную страницу</a></p></body></html>");

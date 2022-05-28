@@ -18,9 +18,9 @@ public class ClientAccount implements Serializable {
     private Client client;
 
     public ClientAccount(int idAccount, String login, String password, StatusAccount statusAccount, Client client) {
+        this.idAccount = idAccount;
         this.login = login;
         this.password = password;
-        this.idAccount = idAccount;
         this.statusAccount = statusAccount;
         this.client = client;
     }
