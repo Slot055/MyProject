@@ -23,9 +23,8 @@ public class ProductDAO implements DAO {
                 String nameProduct = resultSet.getString(5);
                 double price = Double.parseDouble(resultSet.getString(6));
                 String description = resultSet.getString(7);
-                int quantity = Integer.parseInt(resultSet.getString(8));
 
-                Product product = new Product(item, typeProduct, categoryProduct, groupProduct, nameProduct, price, description, quantity);
+                Product product = new Product(item, typeProduct, categoryProduct, groupProduct, nameProduct, price, description);
                 productBase.add(product);
             }
 
@@ -52,8 +51,7 @@ public class ProductDAO implements DAO {
                     String nameProduct = resultSet.getString(5);
                     double price = resultSet.getDouble(6);
                     String description = resultSet.getString(7);
-                    int quantity = resultSet.getInt(8);
-                    product = new Product(item1, typeProduct, categoryProduct, groupProduct, nameProduct, price, description, quantity);
+                    product = new Product(item1, typeProduct, categoryProduct, groupProduct, nameProduct, price, description);
                 }
             }
         } catch (Exception ex) {
@@ -62,15 +60,17 @@ public class ProductDAO implements DAO {
         return product;
     }
 
-    public ArrayList<Product> selectLot(String typeProduct,String categoryProduct, String groupProduct, String nameProduct) throws SQLException {
+    public ArrayList<Product> selectLot(String typeProduct, String categoryProduct, String groupProduct, String nameProduct, double minPrice, double maxPrice) throws SQLException {
         ArrayList<Product> productLot = new ArrayList<>();
         try (Connection connection = DataBaseService.getConnection()) {
-            String sql = "SELECT * FROM accountdatabase.products WHERE typeProduct=? OR categoryProduct=? OR groupProduct=? OR nameProduct=?";
+            String sql = "SELECT * FROM accountdatabase.products WHERE (typeProduct=? OR categoryProduct=? OR groupProduct=? OR nameProduct=?) OR (price >= ? AND price <= ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, typeProduct);
                 preparedStatement.setString(2, categoryProduct);
                 preparedStatement.setString(3, groupProduct);
                 preparedStatement.setString(4, nameProduct);
+                preparedStatement.setDouble(5, minPrice);
+                preparedStatement.setDouble(6, maxPrice);
 
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
@@ -80,10 +80,9 @@ public class ProductDAO implements DAO {
                     String categoryProduct1 = resultSet.getString(3);
                     String groupProduct1 = resultSet.getString(4);
                     String nameProduct1 = resultSet.getString(5);
-                    double price = resultSet.getDouble(6);
+                    double price1 = resultSet.getDouble(6);
                     String description = resultSet.getString(7);
-                    int quantity = resultSet.getInt(8);
-                    Product product = new Product(item, typeProduct1, categoryProduct1, groupProduct1, nameProduct1, price, description, quantity);
+                    Product product = new Product(item, typeProduct1, categoryProduct1, groupProduct1, nameProduct1, price1, description);
                     productLot.add(product);
                 }
             }
@@ -96,7 +95,7 @@ public class ProductDAO implements DAO {
     public int insert(Product product) throws SQLException {
 
         try (Connection connection = DataBaseService.getConnection()) {
-            String sql = "INSERT INTO accountdatabase.products (typeProduct,categoryProduct,groupProduct,nameProduct,price,description,quantity) Values (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO accountdatabase.products (typeProduct,categoryProduct,groupProduct,nameProduct,price,description) Values (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, product.getTypeProduct());
                 preparedStatement.setString(2, product.getCategoryProduct());
@@ -104,7 +103,6 @@ public class ProductDAO implements DAO {
                 preparedStatement.setString(4, product.getNameProduct());
                 preparedStatement.setDouble(5, product.getPrice());
                 preparedStatement.setString(6, product.getDescription());
-                preparedStatement.setInt(7, product.getQuantity());
 
                 return preparedStatement.executeUpdate();
             }
@@ -125,8 +123,7 @@ public class ProductDAO implements DAO {
                 preparedStatement.setString(4, product.getNameProduct());
                 preparedStatement.setDouble(5, product.getPrice());
                 preparedStatement.setString(6, product.getDescription());
-                preparedStatement.setInt(7, product.getQuantity());
-                preparedStatement.setInt(8, product.getItem());
+                preparedStatement.setInt(7, product.getItem());
                 return preparedStatement.executeUpdate();
             }
         } catch (Exception ex) {

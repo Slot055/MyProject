@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
-@WebServlet(urlPatterns = "/editAccountDB")
+@WebServlet(urlPatterns = "/regAccount/inputAccount/editAccountDB")
 public class EditAccountDataBaseServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -26,7 +26,7 @@ public class EditAccountDataBaseServlet extends HttpServlet {
             ClientAccount clientAccount = accountDataBase.get().selectOne(idAccount);
             if (clientAccount != null) {
                 request.setAttribute("clientAccount", clientAccount);
-                getServletContext().getRequestDispatcher("/editClientAccountAll.jsp").forward(request, response);
+                getServletContext().getRequestDispatcher("/sellerJSP/account/editClientAccountAll.jsp").forward(request, response);
             } else {
                 getServletContext().getRequestDispatcher("/notFound.jsp").forward(request, response);
             }
@@ -52,12 +52,12 @@ public class EditAccountDataBaseServlet extends HttpServlet {
             if (accountService.get().repeatCheckAccount(request, response, login)) {
                 response.getWriter().print("<html><head><p>Логин " + "*" + login + "* уже зарегистрирован в системе, выберите другой логин</a></p></body ></html > ");
                 response.getWriter().print("<p><input type=\"button\" onclick=\"history.back();\" value=\"Назад\"/></p>");
-                response.getWriter().print("<html><head><p><a href=\"/accountDataBaseAll\">К списку аккаунтов пользователей</a></p></body></html>");
+                response.getWriter().print("<html><head><p><a href=\"/regAccount/inputAccount/accountDataBaseAll\">К списку аккаунтов пользователей</a></p></body></html>");
 
             } else {
                 ClientAccount clientAccount = new ClientAccount(idAccount, login, password, statusAccount, client);
                 accountDataBase.get().update(clientAccount);
-                response.sendRedirect(request.getContextPath() + "/accountDataBaseAll");
+                response.sendRedirect(request.getContextPath() + "/regAccount/inputAccount/accountDataBaseAll");
             }
         } catch (Exception ex) {
             getServletContext().getRequestDispatcher("/notFound.jsp").forward(request, response);

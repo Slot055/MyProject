@@ -11,7 +11,7 @@
 <body>
 
 <h2>Каталог Товаров</h2>
-<p><a href="<c:url value="/searchProduct"/>">Поиск товара</a></p>
+<p><a href="<c:url value="/searchProduct.jsp"/>">Поиск товара</a></p>
 <table>
     <jsp:useBean id="productBase" scope="request" type="java.util.List"/>
     <jsp:useBean id="productBaseSet" scope="request" type="java.util.Set"/>

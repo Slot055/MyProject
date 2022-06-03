@@ -1,9 +1,6 @@
 package ru.myOnlineShop.service.clientServise.clientAccountService;
-import ru.myOnlineShop.dao.ProductDAO;
 import ru.myOnlineShop.model.constanta.StatusAccount;
 import ru.myOnlineShop.model.customer.ClientAccount;
-import ru.myOnlineShop.model.product.Product;
-import ru.myOnlineShop.service.Servise;
 import ru.myOnlineShop.dao.AccountDAO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class AccountService implements Servise {
+public class AccountService {
 
     public AccountService() {
 
@@ -51,20 +48,6 @@ public class AccountService implements Servise {
         for (ClientAccount s : clientAccountBase) {
             if (s.getLogin().equals(login)) {
 
-                return true;
-            }
-
-        }
-        return false;
-    }
-    public boolean repeatCheckProduct(HttpServletRequest request, HttpServletResponse response, String typeProduct,String categoryProduct,String groupProduct,String nameProduct,int price) throws IOException {
-        @SuppressWarnings("unchecked")
-        AtomicReference<ProductDAO> productDataBase = (AtomicReference<ProductDAO>) request.getServletContext().getAttribute("productDataBase");
-        ArrayList<Product> productBase = productDataBase.get().select();
-        for (Product p : productBase) {
-            if (p.getTypeProduct().equals(typeProduct) && p.getCategoryProduct().equals(categoryProduct) &&
-                    p.getGroupProduct().equals(groupProduct) && p.getNameProduct().equals(nameProduct) &&
-                            p.getPrice() == price) {
                 return true;
             }
 

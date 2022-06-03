@@ -17,7 +17,7 @@
         <th>Наименование</th>
         <th>Цена</th>
         <th>Описание</th>
-        <th>Остаток на складе</th>
+
     </tr>
     <jsp:useBean id="product" scope="request" type="ru.myOnlineShop.model.product.Product"/>
         <tr>
@@ -26,7 +26,11 @@
             <td>${product.nameProduct}</td>
             <td>${product.price}</td>
             <td>${product.description}</td>
-            <td>${product.quantity}</td>
+            <td> <form method="get" action='<c:url value="/regAccount/inputAccount/basketProduct" />' style="display:inline;">
+                <input type="hidden" name="item" value="${product.item}">
+                <input type="submit" value="Купить">
+            </form>
+            </td>
         </tr>
 </table>
 <p><input type="button" onclick="history.back();" value="Назад"/></p>

@@ -7,6 +7,7 @@ import ru.myOnlineShop.model.customer.ClientAccount;
 import ru.myOnlineShop.dao.AccountDAO;
 import ru.myOnlineShop.model.product.Product;
 import ru.myOnlineShop.service.clientServise.clientAccountService.AccountService;
+import ru.myOnlineShop.service.productService.ProductService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +63,7 @@ public class BuilderObject {
     public static Product buildProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Product product;
         @SuppressWarnings("unchecked")
-        AtomicReference<AccountService> accountService = (AtomicReference<AccountService>) request.getServletContext().getAttribute("accountService");
+        AtomicReference<ProductService> productService = (AtomicReference<ProductService>) request.getServletContext().getAttribute("productService");
         int item = Integer.parseInt(request.getParameter("item"));
         String typeProduct = request.getParameter("typeProduct");
         String categoryProduct = request.getParameter("categoryProduct");
@@ -70,12 +71,11 @@ public class BuilderObject {
         String nameProduct = request.getParameter("nameProduct");
         double price = Double.parseDouble(request.getParameter("price"));
         String description = request.getParameter("description");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        if (accountService.get().repeatCheckProduct(request, response, typeProduct, categoryProduct, groupProduct, nameProduct, (int) price))
+        if (productService.get().repeatCheckProduct(request, typeProduct, categoryProduct, groupProduct, nameProduct, (int) price))
             return null;
         else {
-            product = new Product(item, typeProduct, categoryProduct, groupProduct, nameProduct, price, description, quantity);
+            product = new Product(item, typeProduct, categoryProduct, groupProduct, nameProduct, price, description);
             return product;
         }
     }

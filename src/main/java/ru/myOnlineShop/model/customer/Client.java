@@ -1,8 +1,6 @@
 package ru.myOnlineShop.model.customer;
-import java.io.Serializable;
 
-
-public class Client implements Serializable {
+public class Client {
     private String name;
     private String lastName;
     private String gender;

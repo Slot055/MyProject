@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="windows-1251" %>
 <%@ page import="ru.myOnlineShop.model.customer.ClientAccount" %>
 
@@ -6,7 +7,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>USER</title>
+    <title>Клиент</title>
 </head>
 <body>
 <%
@@ -30,8 +31,8 @@
 <h1>Пользователь - <%out.print(p);%></h1>
 
 <p><a href="/regAccount/inputAccount?command=S">Личные данные</a></p>
-<p><a href="/editClientForm.jsp">Редактирование личных данных</a></p>
+<p><a href="<c:url value="/editClientForm.jsp"/>">Редактирование личных данных</a></p>
 <p><a href="../">Вернуться на главную страницу</a></p>
-<a href="/logout">Выход из аккаунта</a>
+<a href="<c:url value="/regAccount/inputAccount/logout"/>">Выход из аккаунта</a>
 </body>
 </html>

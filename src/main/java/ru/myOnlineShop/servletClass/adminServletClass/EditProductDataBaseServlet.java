@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
-@WebServlet(urlPatterns = "/editProductDB")
+@WebServlet(urlPatterns = "/regAccount/inputAccount/editProductDB")
 public class EditProductDataBaseServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -43,12 +43,12 @@ public class EditProductDataBaseServlet extends HttpServlet {
             Product product = BuilderObject.buildProduct(request, response);
             if (product == null) {
                 response.getWriter().print("<html><head><p>Товар с такими характеристиками уже существует в Базе Данных</a></p></body ></html > ");
-                response.getWriter().print("<html><head><p><a href=\"./sellerJSP/product/createProductDataBase.jsp\">На страницу заведения товара</a></p></body></html>");
-                response.getWriter().print("<html><head><p><a href=\"/productDataBaseAll\">К списку товаров</a></p></body></html>");
-                response.getWriter().print("<html><head><p><a href=\"./\">Вернуться на главную страницу</a></p></body></html>");
+                response.getWriter().print("<html><head><p><a href=\"/sellerJSP/product/createProductDataBase.jsp\">На страницу заведения товара</a></p></body></html>");
+                response.getWriter().print("<html><head><p><a href=\"/regAccount/inputAccount/productDataBaseAll\">К списку товаров</a></p></body></html>");
+                response.getWriter().print("<html><head><p><a href=\"/\">Вернуться на главную страницу</a></p></body></html>");
             } else {
                 productDataBase.get().update(product);
-                response.sendRedirect(request.getContextPath() + "/productDataBaseAll");
+                response.sendRedirect(request.getContextPath() + "/regAccount/inputAccount/productDataBaseAll");
             }
         } catch (Exception ex) {
             getServletContext().getRequestDispatcher("/notFound.jsp").forward(request, response);

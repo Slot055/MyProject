@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
-@WebServlet(urlPatterns = "/deleteProductDB")
+@WebServlet(urlPatterns = "/regAccount/inputAccount/deleteProductDB")
 public class DeleteProductDataBaseServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -21,7 +21,7 @@ public class DeleteProductDataBaseServlet extends HttpServlet {
             productDataBase.get().delete(item);
 
 
-            response.sendRedirect(request.getContextPath() + "/productDataBaseAll");
+            response.sendRedirect(request.getContextPath() + "/regAccount/inputAccount/productDataBaseAll");
         }
         catch(Exception ex) {
             getServletContext().getRequestDispatcher("/notfound.jsp").forward(request, response);

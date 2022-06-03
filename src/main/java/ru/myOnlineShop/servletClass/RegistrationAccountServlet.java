@@ -57,13 +57,13 @@ public class RegistrationAccountServlet extends HttpServlet {
                 response.getWriter().print(clientAccount);
                 response.getWriter().print("<html><head><p>Регистрация прошла успешно</a></p></body ></html > ");
                 if (request.getSession().getAttribute("clientAccount") != null) {
-                    response.getWriter().print("<html><head><p><a href=\"/accountDataBaseAll\">К списку аккаунтов пользователей</a></p></body></html>");
+                    response.getWriter().print("<html><head><p><a href=\"/regAccount/inputAccount/accountDataBaseAll\">К списку аккаунтов пользователей</a></p></body></html>");
                 } else {
                     response.getWriter().print("<html><head><p><a href=./inputAccount.jsp>Войти в аккаунт</a></p></body></html>");
                 }
                 response.getWriter().print("<html><head><p><a href=\"./\">Вернуться на главную страницу</a></p></body></html>");
             } else {
-
+                response.getWriter().print("<html><head><p>Логин уже зарегистрирован в системе, выберите другой логин</a></p></body ></html > ");
                 response.getWriter().print("<html><head><p>Регистрация не завершена, повторите процесс регистрации</a></p></body ></html > ");
                 response.getWriter().print("<html><head><p><a href=\"./registrationAccountForm.jsp\">На страницу регистрации</a></p></body></html>");
                 response.getWriter().print("<html><head><p><a href=./regAccount/inputAccount>Войти в аккаунт</a></p></body></html>");

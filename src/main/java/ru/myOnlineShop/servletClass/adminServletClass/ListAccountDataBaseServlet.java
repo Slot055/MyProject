@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
-@WebServlet(urlPatterns = "/accountDataBaseAll")
+@WebServlet(urlPatterns = "/regAccount/inputAccount/accountDataBaseAll")
 public class ListAccountDataBaseServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

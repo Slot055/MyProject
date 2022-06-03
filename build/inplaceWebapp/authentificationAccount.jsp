@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="windows-1251" %>
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
 </head>
 <body>
 <div>
-    <form action="/regAccount" method="get">
+    <form action="<c:url value="/regAccount"/>" method="get">
         <h2 style="text-align:center">Авторизация</h2>
 
         <p style="text-align:center"><a href="./regAccount?command=signIn">Вход в аккаунт</a></p>

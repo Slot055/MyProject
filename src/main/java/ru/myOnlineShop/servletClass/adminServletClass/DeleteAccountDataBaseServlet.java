@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
-@WebServlet(urlPatterns = "/deleteAccountDB")
+@WebServlet(urlPatterns = "/regAccount/inputAccount/deleteAccountDB")
 public class DeleteAccountDataBaseServlet extends HttpServlet {
 
 
@@ -22,7 +22,7 @@ public class DeleteAccountDataBaseServlet extends HttpServlet {
             accountDataBase.get().delete(idAccount);
 
 
-            response.sendRedirect(request.getContextPath() + "/accountDataBaseAll");
+            response.sendRedirect(request.getContextPath() + "/regAccount/inputAccount/accountDataBaseAll");
         }
         catch(Exception ex) {
             getServletContext().getRequestDispatcher("/notfound.jsp").forward(request, response);

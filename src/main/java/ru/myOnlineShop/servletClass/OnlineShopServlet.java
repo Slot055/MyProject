@@ -38,8 +38,8 @@ public class OnlineShopServlet extends HttpServlet {
         } else if ("searchProduct".equals(command)) {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/searchProduct.jsp");
             requestDispatcher.forward(request, response);
-        } else if ("basket".equals(command)) {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/basket");
+        } else if ("viewBasket".equals(command)) {
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/basket.jsp");
             requestDispatcher.forward(request, response);
         }
 

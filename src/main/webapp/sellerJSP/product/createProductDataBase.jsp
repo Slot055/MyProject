@@ -17,7 +17,7 @@
 
 <div>
     <h3>"*" - отмечены поля обязательные для заполнения</h3>
-    <form action="<c:url value="/createProductDB"/>" method="post">
+    <form action="<c:url value="/regAccount/inputAccount/createProductDB"/>" method="post">
         <label for="typeProduct">Тип *:</label><br>
         <input type="text" id="typeProduct" name="typeProduct"/><br>
         <label for="categoryProduct">Категория *:</label><br>
@@ -30,8 +30,6 @@
         <input type="text" id="price" name="price"/><br>
         <label for="description">Описание:</label><br>
         <input type="text" id="description" name="description"/><br>
-        <label for="quantity">Количество в наличии *:</label><br>
-        <input type="text" id="quantity" name="quantity"/><br>
         <br>
         <br>
         <input type="submit" name="signup" value="Отправить">

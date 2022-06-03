@@ -4,13 +4,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <form action="<c:url value="/accountDataBaseAll"/>" method="get">
+    <form action="<c:url value="/regAccount/inputAccount/accountDataBaseAll"/>" method="get">
         <title>Список Аккаунтов</title>
         </form>
 <body>
 <h2>Список Аккаунтов</h2>
 <p><a href='<c:url value="/registrationAccountForm.jsp" />'>Добавить новый аккаунт</a></p>
-<table>
+<table cellpadding="2" cellspacing="3" border="2">
     <tr>
         <th>Номер Аккаунта</th>
         <th>Логин</th>
@@ -39,8 +39,8 @@
             <td>${clientAccount.client.getEmail()}</td>
             <td>
             <td>
-                <a href='<c:url value="/editAccountDB?idAccount=${clientAccount.idAccount}" />'>Редактировать</a> |
-                <form method="post" action='<c:url value="/deleteAccountDB" />' style="display:inline;">
+                <a href='<c:url value="/regAccount/inputAccount/editAccountDB?idAccount=${clientAccount.idAccount}" />'>Редактировать</a> |
+                <form method="post" action='<c:url value="/regAccount/inputAccount/deleteAccountDB" />' style="display:inline;">
                     <input type="hidden" name="idAccount" value="${clientAccount.idAccount}">
                     <input type="submit" value="Удалить">
                 </form>

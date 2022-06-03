@@ -11,13 +11,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <form action="<c:url value="/productDataBaseAll"/>" method="get">
+    <form action="<c:url value="/regAccount/inputAccount/productDataBaseAll"/>" method="get">
         <title>Список Товаров</title>
     </form>
 <body>
 <h2>Список Товаров</h2>
 <p><a href="<c:url value="/sellerJSP/product/createProductDataBase.jsp"/>">Добавить новый товар</a></p>
-<table>
+<table cellpadding="2" cellspacing="3" border="2">
     <tr>
         <th>Артикул</th>
         <th>Тип</th>
@@ -26,7 +26,6 @@
         <th>Наименование</th>
         <th>Цена</th>
         <th>Описание</th>
-        <th>Количество на складе</th>
         <th></th>
     </tr>
     <jsp:useBean id="productBase" scope="request" type="java.util.List"/>
@@ -39,11 +38,10 @@
             <td>${product.nameProduct}</td>
             <td>${product.price}</td>
             <td>${product.description}</td>
-            <td>${product.quantity}</td>
             <td>
             <td>
-                <a href='<c:url value="/editProductDB?item=${product.item}" />'>Редактировать</a> |
-                <form method="post" action='<c:url value="/deleteProductDB" />' style="display:inline;">
+                <a href='<c:url value="/regAccount/inputAccount/editProductDB?item=${product.item}" />'>Редактировать</a> |
+                <form method="post" action='<c:url value="/regAccount/inputAccount/deleteProductDB" />' style="display:inline;">
                     <input type="hidden" name="item" value="${product.item}">
                     <input type="submit" value="Удалить">
                 </form>

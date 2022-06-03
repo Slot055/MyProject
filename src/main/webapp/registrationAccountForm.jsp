@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="windows-1251" %>
 <%@ page import="ru.myOnlineShop.model.customer.ClientAccount,ru.myOnlineShop.model.constanta.StatusAccount" %>
 
@@ -14,7 +15,7 @@
     if (clientAccount == null) {
 %>
 <h3>Данные Аккаунта</h3>
-<form action="/regAccount" method="post">
+<form action="<c:url value="/regAccount"/>" method="post">
     <label for="login">Логин:</label><br>
     <input type="text" id="login" name="login"><br>
     <label for="password">Пароль:</label><br>
@@ -31,7 +32,7 @@
 } else if (clientAccount.getStatusAccount().equals(StatusAccount.ADMIN)) {
 %>
 <h3>Данные Аккаунта</h3>
-<form action="/regAccount" method="post">
+<form action="<c:url value="/regAccount"/>" method="post">
     <label for="login">Логин:</label><br>
     <input type="text" id="login" name="login"/><br>
     <label for="password">Пароль:</label><br>

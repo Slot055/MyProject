@@ -7,9 +7,8 @@
 </head>
 <body>
 
-<div>
     <form action="/onlineShop" method="get">
-        <h1 style="text-align:center">OnlineShop</h1>
+        <h1 style="text-align:center"><img src="${pageContext.request.contextPath }/images/Shop.jpg" width=300"></h1>
         <h2 style="text-align:center">Интернет - магазин</h2>
         <script type="text/javascript">
             function getDate() {
@@ -35,8 +34,9 @@
 
         </script>
         <h3 style="text-align:center">Время:
-            <div id="timedisplay"></div>
+            <em id="timedisplay"></em>
         </h3>
+
         <%
             String s;
             HttpSession session1 = request.getSession();
@@ -44,14 +44,17 @@
                 s = "Аккаунт клиента";
             } else s = "Войти в аккаунт";
         %>
-        <p style="text-align:center"><a href="./onlineShop?command=info">Информация о магазине</a></p>
-        <p style="text-align:center"><a href="./onlineShop?command=authentification"><%out.print(s);%></a></p>
-        <p style="text-align:center"><a href="./onlineShop?command=catalog">Каталог товаров</a></p>
-        <p style="text-align:center"><a href="./onlineShop?command=searchProduct">Поиск товара</a></p>
-        <p style="text-align:center"><a href="./onlineShop?command=basket">Корзина товаров</a></p>
+        <style>div {
+            display: inline-block;
+            width: 19.8%;
+        }</style>
+        <div class = block><a href="./onlineShop?command=info"> <img src="${pageContext.request.contextPath }/images/info.jpg" width=100"></a><br>Информация о магазине</div>
+        <div class = block><a href="./onlineShop?command=authentification"><img src="${pageContext.request.contextPath }/images/account.png" width=80"></a><br><%out.print(s);%></div>
+        <div class = block><a href="./onlineShop?command=catalog"><img src="${pageContext.request.contextPath }/images/catalog.jpg" width=100"></a><br>Каталог товаров</div>
+        <div class = block><a href="./onlineShop?command=searchProduct"><img src="${pageContext.request.contextPath }/images/search.jpg" width=120"></a><br>Поиск товара</div>
+        <div class = block><a href="./onlineShop?command=viewBasket"><img src="${pageContext.request.contextPath }/images/Basket.jpg" width=100"></a><br>Корзина товаров</div>
 
     </form>
-</div>
 
 </body>
 </html>

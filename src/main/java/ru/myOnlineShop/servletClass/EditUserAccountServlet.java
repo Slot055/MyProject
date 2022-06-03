@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
-@WebServlet(urlPatterns = "/account")
+@WebServlet(urlPatterns = "/regAccount/inputAccount/account")
 public class EditUserAccountServlet extends HttpServlet {
 
     @Override
@@ -39,8 +39,8 @@ public class EditUserAccountServlet extends HttpServlet {
             accountDataBase.get().update(clientAccount);
             request.getSession().setAttribute("clientAccount",clientAccount);
             response.getWriter().print("<html><head><p>Личные данные сохранены</a></p></body ></html >");
-            response.getWriter().print("<html><head><p><a href=\"./regAccount/inputAccount\">В личный кабинет</a></p></body></html>");
-            response.getWriter().print("<html><head><p><a href=\"./\">Вернуться на главную страницу</a></p></body></html>");
+            response.getWriter().print("<html><head><p><a href=\"/regAccount/inputAccount\">В личный кабинет</a></p></body></html>");
+            response.getWriter().print("<html><head><p><a href=\"/\">Вернуться на главную страницу</a></p></body></html>");
         } catch (Exception ex) {
             getServletContext().getRequestDispatcher("/notFound.jsp").forward(request, response);
         }

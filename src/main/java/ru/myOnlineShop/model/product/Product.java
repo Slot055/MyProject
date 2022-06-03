@@ -8,9 +8,9 @@ public class Product implements Comparable<Product> {
     private String nameProduct;
     private double price;
     private String description;
-    private int quantity;
 
-    public Product(int item, String typeProduct, String categoryProduct, String groupProduct, String nameProduct, double price, String description, int quantity) {
+
+    public Product(int item, String typeProduct, String categoryProduct, String groupProduct, String nameProduct, double price, String description) {
         this.item = item;
         this.typeProduct = typeProduct;
         this.categoryProduct = categoryProduct;
@@ -18,17 +18,15 @@ public class Product implements Comparable<Product> {
         this.nameProduct = nameProduct;
         this.price = price;
         this.description = description;
-        this.quantity = quantity;
     }
 
-    public Product(String typeProduct, String categoryProduct, String groupProduct, String nameProduct, double price, String description, int quantity) {
+    public Product(String typeProduct, String categoryProduct, String groupProduct, String nameProduct, double price, String description) {
         this.typeProduct = typeProduct;
         this.categoryProduct = categoryProduct;
         this.groupProduct = groupProduct;
         this.nameProduct = nameProduct;
         this.price = price;
         this.description = description;
-        this.quantity = quantity;
     }
 
     public Product() {
@@ -37,7 +35,7 @@ public class Product implements Comparable<Product> {
     @Override
     public String toString() {
         return "Тип товара:" + typeProduct + " , " + "Категория товара:" + categoryProduct + " , " + "Наименование товара:" + nameProduct +
-                " , " + "Цена:" + price + " , " + "Описание:" + description + " , " + "Количество:" + quantity;
+                " , " + "Цена:" + price + " , " + "Описание:" + description;
     }
 
 
@@ -99,14 +97,6 @@ public class Product implements Comparable<Product> {
 
     public void setItem(int item) {
         this.item = item;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     @Override

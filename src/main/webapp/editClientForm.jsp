@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="windows-1251" %>
 <%@ page import="ru.myOnlineShop.model.customer.ClientAccount" %>
 <html>
@@ -19,7 +20,7 @@
 
 <div>
     <h3>Форма редактирования данных Аккаунта</h3>
-    <form action="/account" method="post">
+    <form action="<c:url value="/regAccount/inputAccount/account"/>" method="post">
         <input type="hidden" value="${clientAccount.idAccount}" name="idAccount"/>
         <label for="login">Логин:</label><br>
         <input type="text" id="login" name="login" value="${clientAccount.login}" /><br>
