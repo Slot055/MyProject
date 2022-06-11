@@ -1,17 +1,22 @@
 package ru.myOnlineShop.dao;
+
 import dataBase.DataBaseService;
 import ru.myOnlineShop.model.constanta.StatusAccount;
+import ru.myOnlineShop.model.customer.CashAccount;
 import ru.myOnlineShop.model.customer.Client;
 import ru.myOnlineShop.model.customer.ClientAccount;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class AccountDAO implements DAO{
+public class AccountDAO extends HttpServlet implements DAO {
 
-    public ArrayList<ClientAccount> select() {
+    public ArrayList<ClientAccount> select(HttpServletRequest request) {
         final ArrayList<ClientAccount> clientAccountBase = new ArrayList<>();
-
-        try (Connection connection = DataBaseService.getConnection()) {
+        Connection connection = (Connection) request.getServletContext().getAttribute("connection");
+        try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM accountdatabase.account");
             while (resultSet.next()) {
@@ -32,10 +37,11 @@ public class AccountDAO implements DAO{
         return clientAccountBase;
     }
 
-    public ClientAccount selectOne(int idAccount) throws SQLException {
+    public ClientAccount selectOne(int idAccount,HttpServletRequest request) throws SQLException {
 
         ClientAccount clientAccount = null;
-        try (Connection connection = DataBaseService.getConnection()) {
+        Connection connection = (Connection) request.getServletContext().getAttribute("connection");
+        try {
             String sql = "SELECT * FROM accountdatabase.account WHERE idAccount=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, idAccount);
@@ -57,9 +63,10 @@ public class AccountDAO implements DAO{
         return clientAccount;
     }
 
-    public int insert(ClientAccount clientAccount) throws SQLException {
+    public int insert(ClientAccount clientAccount,HttpServletRequest request) throws SQLException {
 
-        try (Connection connection = DataBaseService.getConnection()) {
+        Connection connection = (Connection) request.getServletContext().getAttribute("connection");
+        try {
             String sql = "INSERT INTO accountdatabase.account (login,password,statusAccount,name,lastName,gender,age,phoneNumber,email) Values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, clientAccount.getLogin());
@@ -80,9 +87,10 @@ public class AccountDAO implements DAO{
         return 0;
     }
 
-    public int update(ClientAccount clientAccount) throws SQLException {
+    public int update(ClientAccount clientAccount,HttpServletRequest request) throws SQLException {
 
-        try (Connection connection = DataBaseService.getConnection()) {
+        Connection connection = (Connection) request.getServletContext().getAttribute("connection");
+        try {
             String sql = "UPDATE accountdatabase.account SET login = ?, password = ?, statusAccount = ?, name = ?, lastName = ?, gender = ?, age = ?,phoneNumber = ?,email = ? WHERE idAccount = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, clientAccount.getLogin());
@@ -103,9 +111,10 @@ public class AccountDAO implements DAO{
         return 0;
     }
 
-    public int delete(int idAccount) throws SQLException {
+    public int delete(int idAccount,HttpServletRequest request) throws SQLException {
 
-        try (Connection connection = DataBaseService.getConnection()) {
+        Connection connection = (Connection) request.getServletContext().getAttribute("connection");
+        try {
             String sql = "DELETE FROM accountdatabase.account WHERE idAccount = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, idAccount);

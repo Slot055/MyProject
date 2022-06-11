@@ -1,10 +1,9 @@
 package ru.myOnlineShop.servletClass;
-
 import ru.myOnlineShop.dao.ProductDAO;
-import ru.myOnlineShop.model.customer.Basket;
+import ru.myOnlineShop.model.constanta.StatusAccount;
+import ru.myOnlineShop.model.buy.Basket;
 import ru.myOnlineShop.model.product.Product;
-import ru.myOnlineShop.service.clientServise.clientBuyService.BuyService;
-
+import ru.myOnlineShop.service.clientServise.BuyService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,19 +25,27 @@ public class BasketProductServlet extends HttpServlet {
             AtomicReference<BuyService> buyService = (AtomicReference<BuyService>) getServletContext().getAttribute("buyService");
             @SuppressWarnings("unchecked")
             AtomicReference<ProductDAO> productDataBase = (AtomicReference<ProductDAO>) getServletContext().getAttribute("productDataBase");
+            StatusAccount statusAccount = (StatusAccount) request.getSession().getAttribute("statusAccount");
             int item = Integer.parseInt(request.getParameter("item"));
-            Product product = productDataBase.get().selectOne(item);
-            if (product != null) {
-                request.setAttribute("product", product);
-                List<Basket> basketProducts = buyService.get().addToBasket(request, item, product);
-                request.getSession().setAttribute("basketProducts", basketProducts);
-                response.getWriter().print("Товар добавлен в корзину");
-                response.getWriter().print("<html><head><p><input type=\"button\" onclick=\"history.back();\" value=\"Назад\"/></p></body></html>");
+            Product product = productDataBase.get().selectOne(item,request);
+            if (statusAccount == StatusAccount.USER || statusAccount == StatusAccount.ADMIN) {
+                if (product != null) {
+                    request.setAttribute("product", product);
+                    List<Basket> basketProducts = buyService.get().addToBasket(request, item, product);
+                    request.getSession().setAttribute("basketProducts", basketProducts);
+                    getServletContext().getRequestDispatcher("/basket.jsp").forward(request,response);
+                } else {
+                    response.getWriter().print("Произошла непредвиденная ошибка");
+                    getServletContext().getRequestDispatcher("/notFound.jsp").include(request, response);
+                }
             } else {
-                getServletContext().getRequestDispatcher("/notFound.jsp").forward(request, response);
+                response.getWriter().print("Совершать покупки могут только зарегистрированные пользователи, необходимо пройти процесс регистрации или войти в аккаунт");
+                getServletContext().getRequestDispatcher("/notFound.jsp").include(request, response);
+
             }
         } catch (Exception ex) {
-            getServletContext().getRequestDispatcher("/notFound.jsp").forward(request, response);
+            response.getWriter().print("Произошла непредвиденная ошибка");
+            getServletContext().getRequestDispatcher("/notFound.jsp").include(request, response);
 
         }
     }
@@ -52,6 +59,6 @@ public class BasketProductServlet extends HttpServlet {
         int item = Integer.parseInt(request.getParameter("item"));
         List<Basket> basketProducts = buyService.get().removeFromBasket(request, item);
         request.getSession().setAttribute("basketProducts", basketProducts);
-        request.getRequestDispatcher("/basket.jsp").forward(request,response);
+        request.getRequestDispatcher("/basket.jsp").forward(request, response);
     }
 }

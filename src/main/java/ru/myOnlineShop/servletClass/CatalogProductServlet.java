@@ -2,7 +2,7 @@ package ru.myOnlineShop.servletClass;
 
 import ru.myOnlineShop.dao.ProductDAO;
 import ru.myOnlineShop.model.product.Product;
-import ru.myOnlineShop.service.productService.ProductService;
+import ru.myOnlineShop.service.ProductService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +24,7 @@ public class CatalogProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         @SuppressWarnings("unchecked")
         AtomicReference<ProductDAO> productDataBase = (AtomicReference<ProductDAO>) getServletContext().getAttribute("productDataBase");
-        ArrayList<Product> productBase = productDataBase.get().select();
+        ArrayList<Product> productBase = productDataBase.get().select(request);
         request.setAttribute("productBase", productBase);
         Set<Product> productBaseSet = new HashSet<>();
         request.setAttribute("productBaseSet", productBaseSet);

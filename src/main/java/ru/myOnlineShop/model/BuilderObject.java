@@ -1,18 +1,24 @@
 package ru.myOnlineShop.model;
 
-import ru.myOnlineShop.dao.ProductDAO;
+import org.joda.time.DateTime;
+import ru.myOnlineShop.model.buy.Basket;
+import ru.myOnlineShop.model.buy.Check;
+import ru.myOnlineShop.model.buy.HistoryOrders;
+import ru.myOnlineShop.model.buy.Order;
 import ru.myOnlineShop.model.constanta.StatusAccount;
+import ru.myOnlineShop.model.constanta.StatusOrder;
 import ru.myOnlineShop.model.customer.Client;
 import ru.myOnlineShop.model.customer.ClientAccount;
-import ru.myOnlineShop.dao.AccountDAO;
 import ru.myOnlineShop.model.product.Product;
-import ru.myOnlineShop.service.clientServise.clientAccountService.AccountService;
-import ru.myOnlineShop.service.productService.ProductService;
+import ru.myOnlineShop.service.AccountService;
+import ru.myOnlineShop.service.ProductService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class BuilderObject {
@@ -78,6 +84,33 @@ public class BuilderObject {
             product = new Product(item, typeProduct, categoryProduct, groupProduct, nameProduct, price, description);
             return product;
         }
+    }
+
+    public static Order buildOrder(List<Basket> basketProducts) {
+        Order order = new Order();
+        order.setNumberOrder(order.generateNumberOrder());
+        order.setDateTime(new DateTime().toDateTime());
+        order.setListProducts(new ArrayList<>(basketProducts));
+        double sum = 0;
+        for (Basket b : order.getListProducts()) {
+            sum += b.getProduct().getPrice() * b.getQuantityInBasket();
+        }
+        order.setSum(sum);
+        return order;
+    }
+
+    public static Check buildCheck(boolean pay) {
+        Check check = new Check(pay);
+        return check;
+    }
+
+    public static HistoryOrders buildHistoryOrders(ClientAccount clientAccount) {
+
+        HistoryOrders historyOrders = new HistoryOrders();
+        historyOrders.setClientAccount(clientAccount);
+        historyOrders.setOldOrders(historyOrders.getOldOrders());
+
+        return historyOrders;
     }
 
 }

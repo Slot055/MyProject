@@ -3,10 +3,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Ошибка</title>
+<title>Сообщение</title>
 </head>
 <body>
-<h2>Page not found</h2>
+<h2></h2>
 </body>
 
 <div>

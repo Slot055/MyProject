@@ -17,6 +17,8 @@ public class ClientAccount implements Serializable {
     private StatusAccount statusAccount;
     private Client client;
 
+    private CashAccount cashAccount;
+
     public ClientAccount(int idAccount, String login, String password, StatusAccount statusAccount, Client client) {
         this.idAccount = idAccount;
         this.login = login;
@@ -100,5 +102,13 @@ public class ClientAccount implements Serializable {
 
     public void setIdAccount(int idAccount) {
         this.idAccount = idAccount;
+    }
+
+    public CashAccount getCashAccount() {
+        return cashAccount;
+    }
+
+    public void setCashAccount(CashAccount cashAccount) {
+        this.cashAccount = cashAccount;
     }
 }

@@ -19,7 +19,7 @@ public class DeleteAccountDataBaseServlet extends HttpServlet {
             @SuppressWarnings("unchecked")
             AtomicReference<AccountDAO> accountDataBase = (AtomicReference<AccountDAO>) getServletContext().getAttribute("accountDataBase");
             int idAccount = Integer.parseInt(request.getParameter("idAccount"));
-            accountDataBase.get().delete(idAccount);
+            accountDataBase.get().delete(idAccount,request);
 
 
             response.sendRedirect(request.getContextPath() + "/regAccount/inputAccount/accountDataBaseAll");

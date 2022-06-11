@@ -31,18 +31,14 @@ public class OnlineShopServlet extends HttpServlet {
             response.getWriter().print("<html><head><p><a href=\"./\">Вернуться на главную страницу</a></p></body></html>");
 
         } else if ("authentification".equals(command)) {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/authentificationAccount.jsp");
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher("/authentificationAccount.jsp").forward(request, response);
         } else if ("catalog".equals(command)) {
-           request.getRequestDispatcher("/catalog").forward(request,response);
+            request.getRequestDispatcher("/catalog").forward(request, response);
         } else if ("searchProduct".equals(command)) {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/searchProduct.jsp");
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher("/searchProduct.jsp").forward(request, response);
         } else if ("viewBasket".equals(command)) {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/basket.jsp");
-            requestDispatcher.forward(request, response);
+            request.getRequestDispatcher("/basket.jsp").forward(request, response);
         }
-
 
     }
 

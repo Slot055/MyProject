@@ -3,15 +3,19 @@ package ru.myOnlineShop.dao;
 import dataBase.DataBaseService;
 import ru.myOnlineShop.model.product.Product;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class ProductDAO implements DAO {
+public class ProductDAO extends HttpServlet implements DAO {
 
-    public ArrayList<Product> select() {
+    public ArrayList<Product> select(HttpServletRequest request) {
         final ArrayList<Product> productBase = new ArrayList<>();
 
-        try (Connection connection = DataBaseService.getConnection()) {
+        Connection connection = (Connection) request.getServletContext().getAttribute("connection");
+        try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM accountdatabase.products");
             while (resultSet.next()) {
@@ -34,10 +38,11 @@ public class ProductDAO implements DAO {
         return productBase;
     }
 
-    public Product selectOne(int item) throws SQLException {
+    public Product selectOne(int item, HttpServletRequest request) throws SQLException {
 
         Product product = null;
-        try (Connection connection = DataBaseService.getConnection()) {
+        Connection connection = (Connection) request.getServletContext().getAttribute("connection");
+        try {
             String sql = "SELECT * FROM accountdatabase.products WHERE item=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, item);
@@ -60,9 +65,10 @@ public class ProductDAO implements DAO {
         return product;
     }
 
-    public ArrayList<Product> selectLot(String typeProduct, String categoryProduct, String groupProduct, String nameProduct, double minPrice, double maxPrice) throws SQLException {
+    public ArrayList<Product> selectLot(HttpServletRequest request, String typeProduct, String categoryProduct, String groupProduct, String nameProduct, double minPrice, double maxPrice) throws SQLException {
         ArrayList<Product> productLot = new ArrayList<>();
-        try (Connection connection = DataBaseService.getConnection()) {
+        Connection connection = (Connection) request.getServletContext().getAttribute("connection");
+        try {
             String sql = "SELECT * FROM accountdatabase.products WHERE (typeProduct=? OR categoryProduct=? OR groupProduct=? OR nameProduct=?) OR (price >= ? AND price <= ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, typeProduct);
@@ -89,12 +95,14 @@ public class ProductDAO implements DAO {
         } catch (Exception ex) {
             System.out.println(ex);
         }
+        Collections.sort(productLot);
         return productLot;
     }
 
-    public int insert(Product product) throws SQLException {
+    public int insert(Product product, HttpServletRequest request) throws SQLException {
 
-        try (Connection connection = DataBaseService.getConnection()) {
+        Connection connection = (Connection) request.getServletContext().getAttribute("connection");
+        try {
             String sql = "INSERT INTO accountdatabase.products (typeProduct,categoryProduct,groupProduct,nameProduct,price,description) Values (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, product.getTypeProduct());
@@ -112,9 +120,10 @@ public class ProductDAO implements DAO {
         return 0;
     }
 
-    public int update(Product product) throws SQLException {
+    public int update(Product product, HttpServletRequest request) throws SQLException {
 
-        try (Connection connection = DataBaseService.getConnection()) {
+        Connection connection = (Connection) request.getServletContext().getAttribute("connection");
+        try {
             String sql = "UPDATE accountdatabase.products SET typeProduct = ?,categoryProduct = ?,groupProduct = ?,nameProduct = ?,price = ?,description = ?,quantity = ? WHERE item = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, product.getTypeProduct());
@@ -132,9 +141,10 @@ public class ProductDAO implements DAO {
         return 0;
     }
 
-    public int delete(int item) throws SQLException {
+    public int delete(int item, HttpServletRequest request) throws SQLException {
 
-        try (Connection connection = DataBaseService.getConnection()) {
+        Connection connection = (Connection) request.getServletContext().getAttribute("connection");
+        try {
             String sql = "DELETE FROM accountdatabase.products WHERE item = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, item);

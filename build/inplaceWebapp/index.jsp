@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page
         import="javax.servlet.http.HttpSession, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse,javax.servlet.http.HttpServlet" %>
+<%@ page import="ru.myOnlineShop.model.customer.ClientAccount" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,8 +41,9 @@
         <%
             String s;
             HttpSession session1 = request.getSession();
+            ClientAccount clientAccount = (ClientAccount) session1.getAttribute("clientAccount");
             if ((session1.getAttribute("login")) != null && (session1.getAttribute("password")) != null) {
-                s = "Аккаунт клиента";
+                s = ("Аккаунт клиента: " + clientAccount.getLogin());
             } else s = "Войти в аккаунт";
         %>
         <style>div {

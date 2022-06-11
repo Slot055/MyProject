@@ -18,7 +18,7 @@ public class DeleteProductDataBaseServlet extends HttpServlet {
             @SuppressWarnings("unchecked")
             AtomicReference<ProductDAO> productDataBase = (AtomicReference<ProductDAO>) getServletContext().getAttribute("productDataBase");
             int item = Integer.parseInt(request.getParameter("item"));
-            productDataBase.get().delete(item);
+            productDataBase.get().delete(item,request);
 
 
             response.sendRedirect(request.getContextPath() + "/regAccount/inputAccount/productDataBaseAll");

@@ -36,7 +36,7 @@ public class EditUserAccountServlet extends HttpServlet {
             Client client = BuilderObject.buildClient(request,response);
 
             ClientAccount clientAccount = new ClientAccount(idAccount, login, password, statusAccount, client);
-            accountDataBase.get().update(clientAccount);
+            accountDataBase.get().update(clientAccount,request);
             request.getSession().setAttribute("clientAccount",clientAccount);
             response.getWriter().print("<html><head><p>Личные данные сохранены</a></p></body ></html >");
             response.getWriter().print("<html><head><p><a href=\"/regAccount/inputAccount\">В личный кабинет</a></p></body></html>");

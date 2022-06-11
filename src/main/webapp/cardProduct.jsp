@@ -34,6 +34,7 @@
         </tr>
 </table>
 <p><input type="button" onclick="history.back();" value="Назад"/></p>
+<p><a href="/basket.jsp">В корзину</a></p>
 <p><a href=" ../..">Вернуться на главную страницу</a></p>
 </body>
 </html>

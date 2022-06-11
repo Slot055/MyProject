@@ -22,7 +22,7 @@ public class EditProductDataBaseServlet extends HttpServlet {
             @SuppressWarnings("unchecked")
             AtomicReference<ProductDAO> productDataBase = (AtomicReference<ProductDAO>) getServletContext().getAttribute("productDataBase");
             int item = Integer.parseInt(request.getParameter("item"));
-            Product product = productDataBase.get().selectOne(item);
+            Product product = productDataBase.get().selectOne(item,request);
             if (product != null) {
                 request.setAttribute("product", product);
                 getServletContext().getRequestDispatcher("/sellerJSP/product/editProductAll.jsp").forward(request, response);
@@ -47,7 +47,7 @@ public class EditProductDataBaseServlet extends HttpServlet {
                 response.getWriter().print("<html><head><p><a href=\"/regAccount/inputAccount/productDataBaseAll\">К списку товаров</a></p></body></html>");
                 response.getWriter().print("<html><head><p><a href=\"/\">Вернуться на главную страницу</a></p></body></html>");
             } else {
-                productDataBase.get().update(product);
+                productDataBase.get().update(product,request);
                 response.sendRedirect(request.getContextPath() + "/regAccount/inputAccount/productDataBaseAll");
             }
         } catch (Exception ex) {

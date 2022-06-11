@@ -4,7 +4,7 @@ import ru.myOnlineShop.model.constanta.StatusAccount;
 import ru.myOnlineShop.model.customer.Client;
 import ru.myOnlineShop.model.customer.ClientAccount;
 import ru.myOnlineShop.dao.AccountDAO;
-import ru.myOnlineShop.service.clientServise.clientAccountService.AccountService;
+import ru.myOnlineShop.service.AccountService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +23,7 @@ public class EditAccountDataBaseServlet extends HttpServlet {
             @SuppressWarnings("unchecked")
             AtomicReference<AccountDAO> accountDataBase = (AtomicReference<AccountDAO>) getServletContext().getAttribute("accountDataBase");
             int idAccount = Integer.parseInt(request.getParameter("idAccount"));
-            ClientAccount clientAccount = accountDataBase.get().selectOne(idAccount);
+            ClientAccount clientAccount = accountDataBase.get().selectOne(idAccount,request);
             if (clientAccount != null) {
                 request.setAttribute("clientAccount", clientAccount);
                 getServletContext().getRequestDispatcher("/sellerJSP/account/editClientAccountAll.jsp").forward(request, response);
@@ -56,7 +56,7 @@ public class EditAccountDataBaseServlet extends HttpServlet {
 
             } else {
                 ClientAccount clientAccount = new ClientAccount(idAccount, login, password, statusAccount, client);
-                accountDataBase.get().update(clientAccount);
+                accountDataBase.get().update(clientAccount,request);
                 response.sendRedirect(request.getContextPath() + "/regAccount/inputAccount/accountDataBaseAll");
             }
         } catch (Exception ex) {

@@ -18,7 +18,7 @@ public class CardProductServlet extends HttpServlet {
             @SuppressWarnings("unchecked")
             AtomicReference<ProductDAO> productDataBase = (AtomicReference<ProductDAO>) getServletContext().getAttribute("productDataBase");
             int item = Integer.parseInt(request.getParameter("item"));
-            Product product = productDataBase.get().selectOne(item);
+            Product product = productDataBase.get().selectOne(item,request);
             if (product != null) {
                 request.setAttribute("product", product);
                 getServletContext().getRequestDispatcher("/cardProduct.jsp").forward(request, response);
@@ -31,7 +31,7 @@ public class CardProductServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        super.doPost(request, response);
     }
 }

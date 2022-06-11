@@ -1,18 +1,15 @@
-<%--@elvariable id="Math" type=""--%>
+<%@ page import="ru.myOnlineShop.model.constanta.StatusAccount" %><%--@elvariable id="Math" type=""--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: offic
-  Date: 03.06.2022
-  Time: 2:48
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Корзина товаров</title>
 </head>
+<%
+    StatusAccount statusAccount = (StatusAccount) request.getSession().getAttribute("statusAccount");
+    if (statusAccount == StatusAccount.USER || statusAccount == StatusAccount.ADMIN) {
+%>
 <body>
 <%--@elvariable id="basketProducts" type=""--%>
 <c:if test="${basketProducts == null || basketProducts.size() == 0}">
@@ -42,6 +39,13 @@
             <td>${basket.quantityInBasket}</td>
             <td>${Math.round((basket.product.price * basket.quantityInBasket) * 100.0) / 100.0}</td>
             <td>
+                <form method="get" action='<c:url value="/regAccount/inputAccount/basketProduct" />'
+                      style="display:inline;">
+                    <input type="hidden" name="item" value="${basket.product.item}">
+                    <input type="submit" value="Добавить">
+                </form>
+            </td>
+            <td>
                 <form method="post" action='<c:url value="/regAccount/inputAccount/basketProduct" />'
                       style="display:inline;">
                     <input type="hidden" name="item" value="${basket.product.item}">
@@ -53,6 +57,12 @@
     <tr>
         <td colspan="5" align="right">Сумма всех товаров:</td>
         <td>${Math.round(total * 100.0) / 100.0}</td>
+        <td>
+            <form method="get" action='<c:url value="/regAccount/inputAccount/buy" />'
+                  style="display:inline;">
+                <input type="submit" value="Купить">
+            </form>
+        </td>
     </tr>
     </c:if>
 </table>
@@ -61,4 +71,10 @@
 <p><a href=" ../..">Вернуться на главную страницу</a></p>
 
 </body>
+<%
+    } else {
+        response.getWriter().print("Доступ к корзине имеют только зарегистрированные пользователи, пройдите процесс регистрации или войдите в аккаунт");
+        request.getRequestDispatcher("/notFound.jsp").include(request, response);
+    }
+%>
 </html>

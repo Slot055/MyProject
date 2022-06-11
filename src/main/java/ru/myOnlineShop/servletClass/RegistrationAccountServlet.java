@@ -53,7 +53,7 @@ public class RegistrationAccountServlet extends HttpServlet {
             AtomicReference<AccountDAO> accountDataBase = (AtomicReference<AccountDAO>) getServletContext().getAttribute("accountDataBase");
             ClientAccount clientAccount = BuilderObject.buildClientAccount(request, response);
             if (clientAccount != null) {
-                accountDataBase.get().insert(clientAccount);
+                accountDataBase.get().insert(clientAccount,request);
                 response.getWriter().print(clientAccount);
                 response.getWriter().print("<html><head><p>Регистрация прошла успешно</a></p></body ></html > ");
                 if (request.getSession().getAttribute("clientAccount") != null) {

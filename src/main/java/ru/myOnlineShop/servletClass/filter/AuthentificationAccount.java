@@ -1,6 +1,6 @@
 package ru.myOnlineShop.servletClass.filter;
 import ru.myOnlineShop.model.constanta.StatusAccount;
-import ru.myOnlineShop.service.clientServise.clientAccountService.AccountService;
+import ru.myOnlineShop.service.AccountService;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -29,7 +29,6 @@ public class AuthentificationAccount implements Filter {
         @SuppressWarnings("unchecked")
         final AtomicReference<AccountService> accountService = (AtomicReference<AccountService>) req.getServletContext().getAttribute("accountService");
         final HttpSession session = req.getSession();
-        session.getAttribute("clientAccount");
         if (nonNull(session.getAttribute("login")) && nonNull(session.getAttribute("password"))) {
             final StatusAccount statusAccount = (StatusAccount) session.getAttribute("statusAccount");
             moveToMenu(req, res, statusAccount);

@@ -1,7 +1,9 @@
 package ru.myOnlineShop.servletClass.adminServletClass;
+
 import ru.myOnlineShop.dao.ProductDAO;
 import ru.myOnlineShop.model.product.Product;
-import ru.myOnlineShop.service.productService.ProductService;
+import ru.myOnlineShop.service.ProductService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,7 +37,7 @@ public class CreateProductServlet extends HttpServlet {
                 product = new Product(typeProduct, categoryProduct, groupProduct, nameProduct, price, description);
             }
             if (product != null) {
-                productDataBase.get().insert(product);
+                productDataBase.get().insert(product, request);
                 response.getWriter().print(product);
                 response.getWriter().print("<html><head><p>Товар добавлен в Базу Данных</a></p></body ></html > ");
 

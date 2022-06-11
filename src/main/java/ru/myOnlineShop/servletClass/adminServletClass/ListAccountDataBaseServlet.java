@@ -17,7 +17,7 @@ public class ListAccountDataBaseServlet extends HttpServlet {
             throws ServletException, IOException {
         @SuppressWarnings("unchecked")
         AtomicReference<AccountDAO> accountDataBase = (AtomicReference<AccountDAO>) getServletContext().getAttribute("accountDataBase");
-        ArrayList<ClientAccount> clientAccountBase = accountDataBase.get().select();
+        ArrayList<ClientAccount> clientAccountBase = accountDataBase.get().select(request);
         request.setAttribute("clientAccountBase", clientAccountBase);
 
         getServletContext().getRequestDispatcher("/sellerJSP/account/accountDataBaseAll.jsp").forward(request, response);

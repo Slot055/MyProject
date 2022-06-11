@@ -17,7 +17,7 @@ public class ListProductsDataBaseServlet extends HttpServlet {
             throws ServletException, IOException {
         @SuppressWarnings("unchecked")
         AtomicReference<ProductDAO> productDataBase = (AtomicReference<ProductDAO>) getServletContext().getAttribute("productDataBase");
-        ArrayList<Product> productBase = productDataBase.get().select();
+        ArrayList<Product> productBase = productDataBase.get().select(request);
         request.setAttribute("productBase", productBase);
 
         getServletContext().getRequestDispatcher("/sellerJSP/product/productDataBaseAll.jsp").forward(request, response);
