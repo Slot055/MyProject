@@ -28,7 +28,7 @@
     <h1> Финансовый счёт </h1>
     <%--@elvariable id="clientAccount" type="ru.myOnlineShop.model.customer.ClientAccount"--%>
     <h3>Номер карты: <c:out value="${clientAccount.cashAccount.cardNumber}"/></h3>
-    <h3>Сумма на счёте: <c:out value="${clientAccount.cashAccount.cash}"/> рублей.</h3>
+    <h3>Сумма на счёте: <c:out value="${Math.round(clientAccount.cashAccount.cash * 100.0) / 100.0}"/> рублей.</h3>
     <br>
     <br>
     <p><input type="button" onclick="history.back();" value="Назад"/></p>

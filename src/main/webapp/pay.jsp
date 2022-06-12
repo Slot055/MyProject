@@ -21,8 +21,8 @@
     <title>Оплата</title>
     <h1> Оплата заказа </h1>
 
-    <h3>Сумма на счёте: <c:out value="${clientAccount.cashAccount.cash}"/></h3>
-    <h3>Сумма заказа: <c:out value="${order.sum}"/></h3>
+    <h3>Сумма на счёте: <c:out value="${Math.round(clientAccount.cashAccount.cash * 100.0) / 100.0}"/></h3>
+    <h3>Сумма заказа: <c:out value="${Math.round(order.sum * 100.0) / 100.0}"/></h3>
     <br>
     <br>
     <form method="post" action='<c:url value="/regAccount/inputAccount/pay"/>'

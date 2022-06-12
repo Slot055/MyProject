@@ -124,7 +124,7 @@ public class ProductDAO extends HttpServlet implements DAO {
 
         Connection connection = (Connection) request.getServletContext().getAttribute("connection");
         try {
-            String sql = "UPDATE accountdatabase.products SET typeProduct = ?,categoryProduct = ?,groupProduct = ?,nameProduct = ?,price = ?,description = ?,quantity = ? WHERE item = ?";
+            String sql = "UPDATE accountdatabase.products SET typeProduct = ?,categoryProduct = ?,groupProduct = ?,nameProduct = ?,price = ?,description = ? WHERE item = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, product.getTypeProduct());
                 preparedStatement.setString(2, product.getCategoryProduct());

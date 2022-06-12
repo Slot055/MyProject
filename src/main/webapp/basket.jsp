@@ -8,7 +8,7 @@
 </head>
 <%
     StatusAccount statusAccount = (StatusAccount) request.getSession().getAttribute("statusAccount");
-    if (statusAccount == StatusAccount.USER || statusAccount == StatusAccount.ADMIN) {
+    if (statusAccount == StatusAccount.USER) {
 %>
 <body>
 <%--@elvariable id="basketProducts" type=""--%>
@@ -72,6 +72,9 @@
 
 </body>
 <%
+    } else if (statusAccount == StatusAccount.ADMIN) {
+        response.getWriter().print("Доступ к корзине имеют только покупатели магазина");
+        request.getRequestDispatcher("/notFound.jsp").include(request, response);
     } else {
         response.getWriter().print("Доступ к корзине имеют только зарегистрированные пользователи, пройдите процесс регистрации или войдите в аккаунт");
         request.getRequestDispatcher("/notFound.jsp").include(request, response);

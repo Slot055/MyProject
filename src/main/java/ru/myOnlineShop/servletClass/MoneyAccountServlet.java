@@ -32,19 +32,26 @@ public class MoneyAccountServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         response.setCharacterEncoding("windows-1251");
-        long cardNumber = Long.parseLong(request.getParameter("cardNumber"));
-        clientAccount = (ClientAccount) request.getSession().getAttribute("clientAccount");
-        if (clientAccount == null)
-            request.getRequestDispatcher("/regAccount/inputAccount").forward(request, response);
-        else {
-
-            if (request.getParameter("cardNumber").length() < 16 || request.getParameter("cardNumber").length() > 16) {
-                response.getWriter().print("Вы ввели некорректный номер карты, попробуйте снова");
-                request.getRequestDispatcher("/notFound.jsp").include(request, response);
-            } else
-                clientAccount.setCashAccount(new CashAccount(cardNumber, 0.00));
-            request.getSession().setAttribute("clientAccount", clientAccount);
-            request.getRequestDispatcher("/moneyAccount.jsp").forward(request, response);
+        try {
+            long cardNumber = Long.parseLong(request.getParameter("cardNumber"));
+            clientAccount = (ClientAccount) request.getSession().getAttribute("clientAccount");
+            if (clientAccount == null)
+                request.getRequestDispatcher("/regAccount/inputAccount").forward(request, response);
+            else {
+                if (request.getParameter("cardNumber").length() == 16) {
+                    clientAccount.setCashAccount(new CashAccount(cardNumber, 0.00));
+                    request.getSession().setAttribute("clientAccount", clientAccount);
+                    request.getRequestDispatcher("/moneyAccount.jsp").forward(request, response);
+                } else {
+                    response.getWriter().print("Вы ввели некорректный номер карты, попробуйте снова(номер должен содержать 16 цифр)");
+                    request.getRequestDispatcher("/notFound.jsp").include(request, response);
+                }
+            }
+        } catch (NumberFormatException e) {
+            response.getWriter().print("Вы ввели некорректный номер карты, попробуйте снова(номер должен содержать 16 цифр)");
+            request.getRequestDispatcher("/notFound.jsp").include(request, response);
         }
+
+
     }
 }

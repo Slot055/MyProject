@@ -38,7 +38,7 @@
         </tr>
     </c:forEach>
 </table>
-<h2>Сумма заказа: <c:out value="${order.sum} рублей."/></h2>
+<h2>Сумма заказа: <c:out value="${Math.round(order.sum * 100.0) / 100.0} рублей."/></h2>
 <c:if test="${order.check.pay == false}">
     <c:set var="status" value="Не оплачен"/>
 </c:if>

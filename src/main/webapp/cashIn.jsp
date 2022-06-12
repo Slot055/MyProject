@@ -24,7 +24,7 @@
 <div>
     <form action="<c:url value="/regAccount/inputAccount/cashIn"/>" method="post">
         <label for="cash">Введите сумму пополнения:</label><br>
-        <input type="text" id="cash" name="cash" value="${clientAccount.cashAccount.cash}"/><br>
+        <input type="text" id="cash" name="cash" value="${Math.round(clientAccount.cashAccount.cash * 100.0) / 100.0}"/><br>
         <br>
         <input type="submit" name="signup" value="Пополнить">
         <br>

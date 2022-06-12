@@ -43,10 +43,10 @@ public class CreateProductServlet extends HttpServlet {
 
             } else {
                 response.getWriter().print("<html><head><p>Товар с такими характеристиками уже существует в Базе Данных</a></p></body ></html > ");
-                response.getWriter().print("<html><head><p><a href=\"./sellerJSP/product/createProductDataBase.jsp\">На страницу заведения товара</a></p></body></html>");
+                response.getWriter().print("<html><head><p><a href=\"/sellerJSP/product/createProductDataBase.jsp\">На страницу заведения товара</a></p></body></html>");
             }
             response.getWriter().print("<html><head><p><a href=\"/regAccount/inputAccount/productDataBaseAll\">К списку товаров</a></p></body></html>");
-            response.getWriter().print("<html><head><p><a href=\"./\">Вернуться на главную страницу</a></p></body></html>");
+            response.getWriter().print("<html><head><p><a href=\"/\">Вернуться на главную страницу</a></p></body></html>");
 
         } catch (Exception ex) {
             System.out.println(ex);

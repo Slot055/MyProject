@@ -39,11 +39,11 @@
 <p><a href="<c:url value="/editClientForm.jsp"/>">Редактирование личных данных</a></p>
 <p><a href="<c:url value="/order.jsp"/>">Заказы</a>
     <c:if test="${order==null}"><c:out value="* Текущих заказов нет *"/></c:if>
-    <c:if test="${order !=null}"><c:out value="* на сумму: ${order.sum} рублей.*"/></c:if></p>
+    <c:if test="${order !=null}"><c:out value="* на сумму: ${Math.round(order.sum * 100.0) / 100.0} рублей.*"/></c:if></p>
 <p><a href="<c:url value="/regAccount/inputAccount/historyOrders"/>">История заказов</a></p>
 <p><a href="<c:url value="/regAccount/inputAccount/moneyAccount"/>">Финансы</a>
     <c:if test="${clientAccount.cashAccount != null}"><c:out
-            value="* ${clientAccount.cashAccount.cash} рублей. *"/></c:if></p>
+            value="* ${Math.round(clientAccount.cashAccount.cash * 100.0) / 100.0} рублей. *"/></c:if></p>
 <p><a href="../">Вернуться на главную страницу</a></p>
 <p><a href="<c:url value="/regAccount/inputAccount/logout"/>">Выход из аккаунта</a></p>
 </body>

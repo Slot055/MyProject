@@ -1,7 +1,21 @@
+<%@ page import="ru.myOnlineShop.model.customer.ClientAccount" %>
+<%@ page import="ru.myOnlineShop.model.constanta.StatusAccount" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
+<%
+    ClientAccount clientAccount = (ClientAccount) request.getSession().getAttribute("clientAccount");
+
+    if (clientAccount == null)
+        response.sendRedirect("/regAccount/inputAccount");
+
+    else if (clientAccount.getStatusAccount() != StatusAccount.USER) {
+        response.getWriter().print("История покупок доступна только клиентам магазина");
+        request.getRequestDispatcher("/notFound.jsp").include(request, response);
+
+    } else {
+%>
 <head>
     <meta charset="UTF-8">
     <form action="<c:url value="/regAccount/inputAccount/historyOrders"/>" method="get">
@@ -35,4 +49,7 @@
     </div>
 </table>
 </body>
+<%
+    }
+%>
 </html>

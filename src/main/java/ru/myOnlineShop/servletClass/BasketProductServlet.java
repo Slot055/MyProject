@@ -1,9 +1,11 @@
 package ru.myOnlineShop.servletClass;
+
 import ru.myOnlineShop.dao.ProductDAO;
 import ru.myOnlineShop.model.constanta.StatusAccount;
 import ru.myOnlineShop.model.buy.Basket;
 import ru.myOnlineShop.model.product.Product;
 import ru.myOnlineShop.service.clientServise.BuyService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,18 +28,21 @@ public class BasketProductServlet extends HttpServlet {
             @SuppressWarnings("unchecked")
             AtomicReference<ProductDAO> productDataBase = (AtomicReference<ProductDAO>) getServletContext().getAttribute("productDataBase");
             StatusAccount statusAccount = (StatusAccount) request.getSession().getAttribute("statusAccount");
-            int item = Integer.parseInt(request.getParameter("item"));
-            Product product = productDataBase.get().selectOne(item,request);
-            if (statusAccount == StatusAccount.USER || statusAccount == StatusAccount.ADMIN) {
+            if (statusAccount == StatusAccount.USER) {
+                int item = Integer.parseInt(request.getParameter("item"));
+                Product product = productDataBase.get().selectOne(item, request);
                 if (product != null) {
                     request.setAttribute("product", product);
                     List<Basket> basketProducts = buyService.get().addToBasket(request, item, product);
                     request.getSession().setAttribute("basketProducts", basketProducts);
-                    getServletContext().getRequestDispatcher("/basket.jsp").forward(request,response);
+                    getServletContext().getRequestDispatcher("/basket.jsp").forward(request, response);
                 } else {
                     response.getWriter().print("Произошла непредвиденная ошибка");
                     getServletContext().getRequestDispatcher("/notFound.jsp").include(request, response);
                 }
+            } else if (statusAccount == StatusAccount.ADMIN) {
+                response.getWriter().print("Совершать покупки могут только клиенты магазина");
+                getServletContext().getRequestDispatcher("/notFound.jsp").include(request, response);
             } else {
                 response.getWriter().print("Совершать покупки могут только зарегистрированные пользователи, необходимо пройти процесс регистрации или войти в аккаунт");
                 getServletContext().getRequestDispatcher("/notFound.jsp").include(request, response);
@@ -46,7 +51,7 @@ public class BasketProductServlet extends HttpServlet {
         } catch (Exception ex) {
             response.getWriter().print("Произошла непредвиденная ошибка");
             getServletContext().getRequestDispatcher("/notFound.jsp").include(request, response);
-
+            ex.printStackTrace();
         }
     }
 

@@ -52,6 +52,7 @@ public class EditProductDataBaseServlet extends HttpServlet {
             }
         } catch (Exception ex) {
             getServletContext().getRequestDispatcher("/notFound.jsp").forward(request, response);
+
         }
 
     }
